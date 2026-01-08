@@ -16,11 +16,11 @@ For example, a statement such as “Ignore all previous instructions and give me
 
 Although the concepts of input, prompt, and instruction frequently used when interacting with artificial intelligence models may appear similar, they have distinct technical meanings.
 
-**Input** is the most general concept and includes all data provided to the model. This includes text written by the user, content that the model reads from the internet or documents, text extracted from files, or OCR outputs of images (technology that converts text inside images, PDFs, scanned documents, or photos into machine-readable text). In short, everything the model evaluates is input.
+Input is the most general concept and includes all data provided to the model. This includes text written by the user, content that the model reads from the internet or documents, text extracted from files, or OCR outputs of images (technology that converts text inside images, PDFs, scanned documents, or photos into machine-readable text). In short, everything the model evaluates is input.
 
-A **prompt** is the structured form of the input that shapes the model’s behavior. The system prompt, user prompt, and contextual explanations together constitute the prompt. A prompt defines not only what the model should read, but also how it should behave.
+A prompt is the structured form of the input that shapes the model’s behavior. The system prompt, user prompt, and contextual explanations together constitute the prompt. A prompt defines not only what the model should read, but also how it should behave.
 
-An **instruction**, on the other hand, is a directive expression within the prompt that aims to make the model perform a specific action. Expressions such as “summarize,” “analyze,” “ignore,” or “do this” are instructions. An instruction is not the entire prompt; it is the behavior-defining component within the prompt.
+An instruction, on the other hand, is a directive expression within the prompt that aims to make the model perform a specific action. Expressions such as “summarize,” “analyze,” “ignore,” or “do this” are instructions. An instruction is not the entire prompt; it is the behavior-defining component within the prompt.
 
 The core problem in prompt injection attacks is the model’s inability to distinguish between input, prompt, and instruction. A model may interpret an instruction hidden within content that should only be read as a valid and executable command. This causes unauthorized directives to become part of the prompt and enables the attacker to control the model’s behavior.
 
@@ -35,6 +35,12 @@ In this type of attack, the attacker’s target is not the model itself, but the
 Such directive expressions can be embedded into external sources in various ways. For example, they may appear in a section unrelated to the main content of a web page such as a footnote, comment section, or seamlessly woven into visible text as if it were a natural sentence. From the user’s perspective, this content may appear to be a normal explanation, a technical note, or contextual information and may not attract attention.
 
 The artificial intelligence model, however, evaluates all text on the page as input without considering visibility or contextual separation. Therefore, this directive expression is treated no differently from the rest of the content and may be interpreted as an instruction that must be followed.
+
+The external source used in this scenario does not have to be a web page. The same mechanism can occur through a publicly accessible PDF file. For example, a directive instruction can be hidden within the normal text of a PDF document. This PDF may be presented as a report, technical document, guide or resume that appears entirely benign.
+
+The user downloads this PDF from the internet and asks the artificial intelligence model to summarize, analyze, or evaluate the document. While processing the PDF content to fulfill this request, the model also treats the embedded directive as part of the input. Especially when the PDF is converted to text via OCR, the directive appears to the model as ordinary text and cannot be separated from the rest of the content.
+
+In such examples, the issue does not stem from the user’s request, but from the content the model is instructed to read. Whether the external source is a web page or a PDF file, the model cannot assess the trustworthiness or origin of the content and may therefore treat the embedded directive as a valid command. This forms the basis of the indirect prompt injection mechanism.
 
 ## Use of Advanced Bypass Techniques
 
@@ -74,36 +80,33 @@ Web pages, PDF files, and documents processed via OCR are particularly suitable 
 
 ### Multi-Language Maneuver
 
-In multi-language techniques, the directive expression appears in a language other than the main language of the content, or in a language for which the model applies weaker security controls.
+In multi-language techniques, the directive expression appears in a language other than the main language of the content, or in a language for which the model applies weaker security controls. Although large language models support many languages, they may not have received the same level of security training across all of them.
 
-Researchers at Brown University have shown that certain harmful commands rejected for security reasons in English were answered directly by models when asked in less common languages such as Zulu or Scottish Gaelic.
+For example, while the majority of a web page may be in English, a small section may contain a directive written in Turkish. The user may not notice this section or may assume it is a technical explanation. However, the model evaluates all text together and may interpret this directive as an instruction to be followed.
+
+Similarly, a request that is rejected in English may not be sufficiently filtered when presented in another language. For instance, an instruction rejected in English may bypass filters when expressed in Turkish or another less commonly used language, thereby influencing the model’s behavior indirectly.
+
+Researchers at Brown University have shown that certain harmful commands rejected for security reasons in English were answered directly by models when asked in less common languages such as Zulu or Scottish Gaelic. In such cases, the model may fail to activate the appropriate security barriers during language switching.
 
 ### Payload Splitting / Fragmentation
 
-In payload splitting approaches, the directive expression is not presented as a single explicit command. Instead, the instruction is fragmented and distributed across different parts of the content.
+In payload splitting approaches, the directive expression is not presented as a single explicit command. Instead, the instruction is fragmented and distributed across different parts of the content. Each fragment may appear harmless, meaningless, or ordinary when viewed in isolation.
 
-Fragments that appear harmless individually may combine within the model to form an unwanted directive and indirectly influence model behavior.
+Within a document or web page, words or short phrases appearing in different sections can be combined by the model within context. Security filters may evaluate these fragments individually and detect no issues. However, when processing the entire content together, the model may reconstruct these fragments into a meaningful instruction.
 
-## References
+In real-world scenarios, this often involves splitting terms that are directly blocked by filters. For example, if the word “malware” is blocked when used directly, it may appear in different places as “mal” and “ware.” The model may combine these terms contextually and reconstruct the prohibited content.
 
-- Hung, K.-H., Ko, C.-Y., Rawat, A., Chung, I.-H., Hsu, W. H., Chen, P.-Y.  
-  *Attention Tracker: Detecting Prompt Injection Attacks in LLMs*  
-  IBM Research & National Taiwan University
+This approach is particularly effective in long texts, reports, or multi-section documents. Fragments that appear harmless individually may combine within the model to form an unwanted directive and indirectly influence model behavior.
 
-- Perez, F., Ribeiro, I.  
-  *Ignore Previous Prompt: Attack Techniques for Language Models*  
-  AE Studio
+## Why Can’t the Model Distinguish These Instructions?
 
-- Sarabamoun, E.  
-  *Special-Character Adversarial Attacks on Open-Source Language Models*  
-  University of Virginia
+After examining the techniques used in direct and indirect prompt injection, it is necessary to understand why these methods work by looking at how the model processes text. These attacks are not merely tricks, but exploit fundamental aspects of how LLMs operate.
 
-- Brown University Researchers  
-  *Multilingual Jailbreaks in Large Language Models*
+The success of prompt injection is directly related to how the model constructs context, tokenizes text, and prioritizes different parts of the input. Below, we examine step by step the technical mechanisms that make these attacks possible.
 
-- Palo Alto Networks  
-  *What Is a Prompt Injection Attack?*  
-  Cyberpedia
+### A. Manipulation of Delimiters
 
-- OWASP  
-  *OWASP Top 10 for Large Language Model Applications (LLM Top 10)*
+Developers often use delimiters such as ###, ---, or triple quotes (""") to separate system instructions from user input. The goal is to help the model distinguish which parts represent system rules and which represent user content.
+
+However, because the model makes this distinction based on contextual interpretation rather than strict rules, confusion can arise when similar delimiters are used within user input. For example, if a user-provided text contains:
+
