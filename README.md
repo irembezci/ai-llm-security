@@ -24,7 +24,7 @@ An overview of how modern LLM-based applications are structured and how differen
 
 Explaining how retrieval systems allow language models to access external knowledge sources during response generation.
 
-* [Understanding RAG Architecture](rag-architecture.md)
+* [Understanding RAG Architecture](articles/rag-architecture.md)
 
 
 ## Agent-Based AI Systems
@@ -43,7 +43,7 @@ This section analyzes security risks and attack surfaces in modern AI systems.
 
 Examining attack techniques targeting language models and LLM-based applications.
 
-* [Prompt Injection Attacks](prompt-injection.md)
+* [Prompt Injection Attacks](articles/prompt-injection.md)
 
 
 ## RAG Security Risks
