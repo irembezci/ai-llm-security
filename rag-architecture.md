@@ -6,9 +6,8 @@ One of the most important components of this architecture is an approach called 
 
 In this article, we will explore how RAG architecture works in modern LLM systems and how it fits into the overall structure of an LLM application.
 
-🇹🇷 Turkish version: [Read here](LINK_TO_TURKISH_ARTICLE)
+🇹🇷 Turkish version: [Read here](https://medium.com/@irembezci/llm-sistemlerinin-mimarisi-bölüm-1-rag-mimarisi-nedir-ve-nasıl-çalışır-c56f3153a625)
 
----
 
 # The Fundamental Problem of LLMs
 
@@ -19,8 +18,6 @@ First, the knowledge of the model is limited to its training data. Any informati
 Second, models typically do not contain organization-specific knowledge. Internal company documentation, technical wikis, support tickets or proprietary data sources are usually not included in the model’s training dataset.
 
 For this reason, many applications require the model to connect to an external knowledge source. **RAG architecture was developed to address this problem.**
-
----
 
 # What is RAG?
 
@@ -42,7 +39,7 @@ LLM Generates Answer
 
 In this way, the model generates answers not only based on its internal parameters but also by using real documents as context.
 
----
+![RAG Architecture](images/rag-architecture.png)
 
 # What is the RAG Pipeline and How Does It Work?
 
@@ -76,8 +73,6 @@ LLM Response
 
 Let’s examine each stage of this pipeline.
 
----
-
 # 1. Document Ingestion
 
 At the core of a RAG system is a **knowledge base** that contains documents from various sources.
@@ -91,8 +86,6 @@ Examples include:
 * Database records
 
 These documents are not directly passed to the model. Instead, they first need to be processed and prepared.
-
----
 
 # 2. Chunking
 
@@ -112,8 +105,6 @@ Paragraphs
 
 Each chunk becomes a separate unit that can later be retrieved during the search process.
 
----
-
 # 3. Embeddings
 
 Document chunks are then converted into **embeddings**, which are numerical representations of text.
@@ -129,8 +120,6 @@ Example:
 ```
 
 These vectors allow the system to compare texts based on **semantic similarity** rather than simple keyword matching.
-
----
 
 # 4. Vector Database
 
@@ -148,8 +137,6 @@ Common vector database systems include:
 
 These systems enable fast semantic searches across millions of document chunks.
 
----
-
 # 5. User Query
 
 When a user asks a question, the system performs the same embedding process on the query.
@@ -162,8 +149,6 @@ How do I reset VPN?
 ```
 
 The query is converted into a vector representation.
-
----
 
 # 6. Similarity Search
 
@@ -180,8 +165,6 @@ Example results:
 ```
 
 These retrieved document chunks will be used as context for the model.
-
----
 
 # 7. Prompt Construction
 
@@ -203,8 +186,6 @@ How do I reset VPN?
 
 At this stage, the model has access to the relevant documents and can use them to generate an informed answer.
 
----
-
 # 8. LLM Response
 
 The constructed prompt is sent to the model, which generates a response based on the provided context.
@@ -217,8 +198,6 @@ To reset your VPN password, follow these steps...
 
 In this way, the response is grounded in actual documents rather than purely probabilistic generation.
 
----
-
 # Why RAG Architecture Matters
 
 RAG architecture has become a fundamental component of many modern LLM applications. Company AI assistants, document search systems and research tools often rely on this architecture.
@@ -226,8 +205,6 @@ RAG architecture has become a fundamental component of many modern LLM applicati
 However, RAG is more than just a retrieval mechanism. It plays a critical role in shaping the architecture of modern AI systems. The retrieval layer acts as a bridge between external data sources and the language model.
 
 Understanding RAG architecture is therefore one of the first steps toward understanding how modern LLM applications operate.
-
----
 
 # Next in the Series
 
@@ -239,8 +216,6 @@ Upcoming topics include:
 * LLM application architectures
 * Attack surfaces in RAG systems
 * Prompt injection and retrieval manipulation
-
----
 
 # References
 
