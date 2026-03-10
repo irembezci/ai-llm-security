@@ -2,52 +2,59 @@
 
 This repository explores the architecture and security of modern AI systems, with a particular focus on large language model (LLM) applications.
 
-Modern AI systems are no longer just standalone models. They are complex systems composed of multiple components such as retrieval pipelines, external data sources, tool integrations, and agent frameworks. While these architectures enable powerful capabilities, they also introduce new attack surfaces and security risks.
+Modern AI systems are not just standalone models. They are complex systems composed of multiple components such as retrieval pipelines, external knowledge bases, tool integrations, and agent frameworks. While these architectures enable powerful capabilities, they also introduce new attack surfaces and security risks.
 
-The purpose of this repository is to document how these systems work and to analyze the security implications that emerge from their architecture.
-
-Topics covered in this repository include the structure of LLM-based applications, retrieval systems such as RAG, prompt injection vulnerabilities, and the attack surface of AI systems.
+The purpose of this repository is to first explain how modern AI systems work, and then analyze the security implications and attack vectors that emerge from these architectures.
 
 ---
 
-# Topics
+# AI Systems
+
+This section focuses on the architecture and design of modern AI applications.
+Understanding how these systems are built is the first step toward analyzing their security.
 
 ## LLM System Architecture
 
-Understanding how modern LLM applications are structured and how different components interact within the system.
+An overview of how modern LLM-based applications are structured and how different components interact within the system.
 
-* RAG Architecture
-  `rag-architecture.md`
+* *(Coming soon)*
 
----
 
 ## Retrieval-Augmented Generation (RAG)
 
-Exploring how RAG pipelines retrieve external knowledge and how retrieval systems interact with language models.
+Explaining how retrieval systems allow language models to access external knowledge sources during response generation.
 
-* Understanding RAG Architecture
-  `rag-architecture.md`
+* [Understanding RAG Architecture](rag-architecture.md)
 
----
 
-## LLM Attack Surface
+## Agent-Based AI Systems
 
-Mapping the different layers of an LLM-based system and identifying potential attack surfaces across the architecture.
+Exploring how agent frameworks extend LLM capabilities through tools, planning mechanisms and multi-step workflows.
 
-*(Coming soon)*
+* *(Coming soon)*
 
 ---
 
-## Prompt Injection Attacks
+# AI Security
 
-Analyzing how malicious inputs can manipulate model behavior and compromise AI systems.
+This section analyzes security risks and attack surfaces in modern AI systems.
 
-  `prompt-injection.md`
+## LLM Attacks
 
----
+Examining attack techniques targeting language models and LLM-based applications.
+
+* [Prompt Injection Attacks](prompt-injection.md)
+
 
 ## RAG Security Risks
 
-Examining security issues specific to retrieval-based systems such as document poisoning, retrieval manipulation, and malicious embeddings.
+Investigating security issues specific to retrieval-based systems, including document poisoning, retrieval manipulation and malicious embeddings.
 
-*(Coming soon)*
+* *(Coming soon)*
+
+
+## AI System Attack Surface
+
+Mapping the different layers of an AI system and identifying potential attack surfaces across the architecture.
+
+* *(Coming soon)*
